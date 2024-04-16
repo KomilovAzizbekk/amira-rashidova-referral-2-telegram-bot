@@ -4,30 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84aba5ad-e9d7-4b64-b08a-113ff6e16b8b" name="Changes" comment="Bismillah!&#10;Started!">
-      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/VideoNote.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/VideoNoteRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d33c8b95-b9f0-444f-a0fd-9da9c8fa5441.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d33c8b95-b9f0-444f-a0fd-9da9c8fa5441.xml" afterDir="false" />
+    <list default="true" id="84aba5ad-e9d7-4b64-b08a-113ff6e16b8b" name="Changes" comment="Done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/constants/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/constants/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/TgUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/TgUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsDate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/enums/StepName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/enums/StepName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/StepRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/StepRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/TgUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/TgUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/MakeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/MakeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/TgService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/TgService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages_uz.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages_uz.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-prod.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-prod.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-prod.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-prod.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/messages_uz.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/messages_uz.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/constants/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/constants/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/TgUser$TgUserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/TgUser$TgUserBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/TgUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/TgUser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsDate.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsDate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/enums/StepName.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/enums/StepName.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/repository/StepRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/repository/StepRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/repository/TgUserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/repository/TgUserRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/MakeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/MakeService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/TgService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/TgService.class" afterDir="false" />
     </list>
@@ -77,6 +59,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Maven.referral-2 [clean].executor": "Run",
+    "Maven.referral-2 [package].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -139,7 +123,7 @@
       <option name="presentableId" value="Default" />
       <updated>1713208218639</updated>
       <workItem from="1713208219718" duration="1700000" />
-      <workItem from="1713242250862" duration="23865000" />
+      <workItem from="1713242250862" duration="29128000" />
     </task>
     <task id="LOCAL-00001" summary="Bismillah!&#10;Started!">
       <option name="closed" value="true" />
@@ -149,7 +133,23 @@
       <option name="project" value="LOCAL" />
       <updated>1713209697450</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Testoviy rejim uchun tayyor">
+      <option name="closed" value="true" />
+      <created>1713270033753</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1713270033753</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Done">
+      <option name="closed" value="true" />
+      <created>1713280774113</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713280774113</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,6 +168,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Bismillah!&#10;Started!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bismillah!&#10;Started!" />
+    <MESSAGE value="Testoviy rejim uchun tayyor" />
+    <MESSAGE value="Done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Done" />
   </component>
 </project>
