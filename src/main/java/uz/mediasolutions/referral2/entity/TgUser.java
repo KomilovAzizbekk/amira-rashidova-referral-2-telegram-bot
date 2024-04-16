@@ -23,23 +23,14 @@ public class TgUser extends AbsLong {
     @Column(name = "chat_id")
     private String chatId;
 
-    @Column(name = "name")
-    private String name;
+//    @Column(name = "name")
+//    private String name;
+//
+//    @Column(name = "phone_number")
+//    private String phoneNumber;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "registered")
-    private boolean registered;
-
-    @Column(name = "admin")
-    private boolean admin;
-
-    @Column(name = "banned")
-    private boolean banned;
+    @Column(name = "invite_link")
+    private String inviteLink;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Step step;
