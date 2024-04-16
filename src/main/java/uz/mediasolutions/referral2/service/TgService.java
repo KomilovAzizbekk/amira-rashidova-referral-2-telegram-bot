@@ -70,11 +70,16 @@ public class TgService extends TelegramLongPollingBot {
             if (msg.equals("/start") &&
                     tgUserRepository.existsByChatId(chatId)) {
                 execute(makeService.whenMenu1(update));
-            } else if (msg.equals("/start") && (chatId.equals("1302908674")) &&
+            } else if (msg.equals("/start") && (chatId.equals("1302908674") ||
+                    chatId.equals("573761807") ||
+                    chatId.equals("285710521")) &&
                     !tgUserRepository.existsByChatId(chatId)) {
                 execute(makeService.whenEnter(chatId));
                 execute(makeService.whenEnter2(chatId));
                 execute(makeService.whenEnter3(chatId));
+            } else if (msg.equals("/start") &&
+                    !tgUserRepository.existsByChatId(chatId)) {
+                execute(makeService.whenNotUser(update));
             } else if (msg.equals("/post")) {
                 execute(makeService.whenPost(update));
             } else if (makeService.getUserStep(chatId).equals(StepName.POST) &&
@@ -130,76 +135,6 @@ public class TgService extends TelegramLongPollingBot {
                 deleteMessage(update);
                 execute(makeService.whenMenu1(update));
             }
-        }
-    }
-
-    private void addMemberToChannel(Long userId) {
-        try {
-            // Get chat administrators
-            GetChatAdministrators getChatAdministrators = new GetChatAdministrators();
-            getChatAdministrators.setChatId("YourChannelID");
-            List<ChatMember> administrators = execute(getChatAdministrators);
-
-            // Check if the bot is an administrator
-            boolean botIsAdmin = false;
-            for (ChatMember administrator : administrators) {
-                if (administrator.getUser().getUserName().equals("AmiraRashidovaMurojaat_bot")) {
-                    botIsAdmin = true;
-                    System.out.println("True boldi");
-                    break;
-                }
-            }
-
-            // If the bot is an administrator, add the new member to the channel
-            if (botIsAdmin) {
-                GetChatMember getChatMember = new GetChatMember();
-                getChatMember.setChatId(CHANNEL_ID);
-                getChatMember.setUserId(userId);
-                ChatMember chatMember = execute(getChatMember);
-
-                if (chatMember != null) {
-                    if (chatMember.getStatus().equals("left") || chatMember.getStatus().equals("kicked")) {
-                        // If the user is not already a member of the channel, add them
-                        PromoteChatMember promoteChatMember = new PromoteChatMember();
-                        promoteChatMember.setChatId(CHANNEL_ID);
-                        promoteChatMember.setUserId(userId);
-                        execute(promoteChatMember);
-                    }
-                }
-            }
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @SneakyThrows
-    private void approveJoinRequest(Update update) {
-        ChatJoinRequest request = update.getChatJoinRequest();
-        GetChatMember getChatMember = new GetChatMember();
-        getChatMember.setChatId(request.getChat().getId().toString());
-        getChatMember.setUserId(request.getUser().getId());
-        try {
-            ChatMember chatMember = execute(getChatMember);
-            if (!chatMember.getStatus().equals("left")) {
-                System.out.println("User already in the channel.");
-            } else {
-                // Approve join request by promoting the user to a member
-                PromoteChatMember promoteChatMember = new PromoteChatMember();
-                promoteChatMember.setChatId(request.getChat().getId().toString());
-                promoteChatMember.setUserId(request.getUser().getId());
-
-                execute(promoteChatMember);
-
-                // Optionally, send a welcome message
-                SendMessage welcomeMessage = new SendMessage();
-                welcomeMessage.setChatId(request.getUser().getId().toString());
-                welcomeMessage.setText("Welcome to the channel! Enjoy your stay.");
-                execute(welcomeMessage);
-
-                System.out.println("Join request approved for user ID: " + request.getUser().getId());
-            }
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
         }
     }
 

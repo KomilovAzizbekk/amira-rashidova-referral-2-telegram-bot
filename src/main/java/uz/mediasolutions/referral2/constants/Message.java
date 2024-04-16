@@ -20,4 +20,6 @@ public interface Message {
    String CHANNEL_URL_FOREVER = "CHANNEL_URL_FOREVER";
    String LINK_MESSAGE = "LINK_MESSAGE";
    String SAVED = "SAVED";
+   String ERROR = "ERROR";
+   String CHANNEL_URL_REQUEST = "CHANNEL_URL_REQUEST";
 }

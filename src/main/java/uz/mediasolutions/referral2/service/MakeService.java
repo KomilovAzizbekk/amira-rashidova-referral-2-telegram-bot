@@ -3,6 +3,7 @@ package uz.mediasolutions.referral2.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.groupadministration.SetChatPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideoNote;
@@ -90,8 +91,8 @@ public class MakeService {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
 
-        if (Objects.equals(chatId, "285710521") || Objects.equals(chatId, "6931160281")
-                || Objects.equals(chatId, "1302908674")) {
+//        if (Objects.equals(chatId, "285710521") || Objects.equals(chatId, "6931160281")
+//                || Objects.equals(chatId, "1302908674")) {
             if (!tgUserRepository.existsByChatId(chatId)) {
                 TgUser user = TgUser.builder()
                         .chatId(chatId)
@@ -105,10 +106,10 @@ public class MakeService {
             sendMessage.enableHtml(true);
             sendMessage.setReplyMarkup(forPost());
             return sendMessage;
-        } else {
-            sendMessage.setText(getMessage(Message.YOU_HAVE_NOT_ADMIN_RIGHTS));
-            return sendMessage;
-        }
+//        } else {
+//            sendMessage.setText(getMessage(Message.YOU_HAVE_NOT_ADMIN_RIGHTS));
+//            return sendMessage;
+//        }
     }
 
     private ReplyKeyboardMarkup forPost() {
@@ -247,4 +248,24 @@ public class MakeService {
         return markupInline;
     }
 
+    public SendMessage whenNotUser(Update update) {
+        String chatId = getChatId(update);
+        SendMessage sendMessage = new SendMessage(chatId,
+                getMessage(Message.ERROR));
+        sendMessage.setReplyMarkup(forNotUser());
+        return sendMessage;
+    }
+
+    private InlineKeyboardMarkup forNotUser() {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        InlineKeyboardButton button1 = new InlineKeyboardButton();
+        button1.setText(getMessage(Message.REDIRECT_TO_CHANNEL));
+        button1.setUrl(getMessage(Message.CHANNEL_URL_REQUEST));
+        List<InlineKeyboardButton> row1 = new ArrayList<>();
+        row1.add(button1);
+        rowsInline.add(row1);
+        markupInline.setKeyboard(rowsInline);
+        return markupInline;
+    }
 }
