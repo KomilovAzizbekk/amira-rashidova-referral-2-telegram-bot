@@ -4,12 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84aba5ad-e9d7-4b64-b08a-113ff6e16b8b" name="Changes" comment="Inline reactionlar qoshildi.&#10;User controller tugatildi.">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d33c8b95-b9f0-444f-a0fd-9da9c8fa5441.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d33c8b95-b9f0-444f-a0fd-9da9c8fa5441.xml" afterDir="false" />
+    <list default="true" id="84aba5ad-e9d7-4b64-b08a-113ff6e16b8b" name="Changes" comment="5 daqiqadan so'ng zapros avtomatik qabul qilinadigan qilindi.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/VideoNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/SavedFiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/enums/StepName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/enums/StepName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/VideoNoteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/SavedFilesRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/MakeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/MakeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/TgService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/TgService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/TgService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/TgService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/utills/constants/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/utills/constants/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages_uz.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages_uz.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/MakeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/MakeService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/TgService.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +81,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "File.Encoding",
     "vue.rearranger.settings.migration": "true"
   },
@@ -135,7 +144,7 @@
       <workItem from="1713466546682" duration="4532000" />
       <workItem from="1713509379131" duration="23343000" />
       <workItem from="1713546674936" duration="19847000" />
-      <workItem from="1713628911071" duration="1033000" />
+      <workItem from="1713628911071" duration="10984000" />
     </task>
     <task id="LOCAL-00001" summary="Bismillah!&#10;Started!">
       <option name="closed" value="true" />
@@ -185,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713626460406</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="5 daqiqadan so'ng zapros avtomatik qabul qilinadigan qilindi.">
+      <option name="closed" value="true" />
+      <created>1713630057998</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1713630057998</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,6 +225,7 @@
     <MESSAGE value="Done" />
     <MESSAGE value="..." />
     <MESSAGE value="Inline reactionlar qoshildi.&#10;User controller tugatildi." />
-    <option name="LAST_COMMIT_MESSAGE" value="Inline reactionlar qoshildi.&#10;User controller tugatildi." />
+    <MESSAGE value="5 daqiqadan so'ng zapros avtomatik qabul qilinadigan qilindi." />
+    <option name="LAST_COMMIT_MESSAGE" value="5 daqiqadan so'ng zapros avtomatik qabul qilinadigan qilindi." />
   </component>
 </project>

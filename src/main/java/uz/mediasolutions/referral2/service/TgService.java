@@ -2,12 +2,12 @@ package uz.mediasolutions.referral2.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.groupadministration.*;
 import org.telegram.telegrambots.meta.api.methods.send.*;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageCaption;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.*;
@@ -22,10 +22,10 @@ import uz.mediasolutions.referral2.repository.MessageCountRepository;
 import uz.mediasolutions.referral2.repository.ReactionRepository;
 import uz.mediasolutions.referral2.utills.constants.Message;
 import uz.mediasolutions.referral2.entity.TgUser;
-import uz.mediasolutions.referral2.entity.VideoNote;
+import uz.mediasolutions.referral2.entity.SavedFiles;
 import uz.mediasolutions.referral2.enums.StepName;
 import uz.mediasolutions.referral2.repository.TgUserRepository;
-import uz.mediasolutions.referral2.repository.VideoNoteRepository;
+import uz.mediasolutions.referral2.repository.SavedFilesRepository;
 
 import java.util.*;
 
@@ -35,14 +35,14 @@ public class TgService extends TelegramLongPollingBot {
 
     private final MakeService makeService;
     private final TgUserRepository tgUserRepository;
-    private final VideoNoteRepository videoNoteRepository;
+    private final SavedFilesRepository savedFilesRepository;
     private final MessageCountRepository messageCountRepository;
     private final ReactionRepository reactionRepository;
 
-    //    private final String CHANNEL_ID = "-1002125526955";
+    //        private final String CHANNEL_ID = "-1002125526955";
     private final String CHANNEL_ID = "-1001903287909";
 
-    //    private final String GROUP_ID = "-1002083009671";
+    //        private final String GROUP_ID = "-1002083009671";
     private final String GROUP_ID = "-1002011329029";
 
     @Override
@@ -73,39 +73,44 @@ public class TgService extends TelegramLongPollingBot {
                 tgUserRepository.save(user);
             }
         } else if (update.hasChatJoinRequest()) {
-            System.out.println("Assalom");
+            execute(makeService.whenBegin(update));
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
                 @SneakyThrows
                 @Override
                 public void run() {
                     approveUser(update);
-                    System.out.println("Task executed after 1 minute");
+                    System.out.println("Task executed after 10 sec");
                 }
             };
-            timer.schedule(task, 20 * 1000);
+            timer.schedule(task, 10 * 1000);
         } else if (update.hasMessage() && update.getMessage().hasText()) {
             String msg = update.getMessage().getText();
             if (msg.equals("/start") &&
-                    tgUserRepository.existsByChatId(chatId) &&
-                    tgUserRepository.findByChatId(chatId).getInvitedPeople() >= 5) {
+                    tgUserRepository.existsByChatId(chatId)) {
                 execute(makeService.whenMenu1(chatId));
             } else if (msg.equals("/start") && (chatId.equals("1302908674") ||
                     chatId.equals("573761807") ||
                     chatId.equals("285710521"))) {
                 if (!tgUserRepository.existsByChatId(chatId)) {
-                    execute(makeService.whenEnter(update));
-                    if (videoNoteRepository.existsById(1L))
+                    if (savedFilesRepository.existsById(2L))
+                        execute(makeService.whenEnter1(update));
+                    else
+                        execute(makeService.whenEnter(update));
+                    if (savedFilesRepository.existsById(1L))
                         execute(makeService.whenEnter2(chatId));
-                    execute(makeService.whenMenu1(chatId));
+                    execute(whenEnter3(chatId));
                 } else {
                     execute(makeService.whenMenu1(chatId));
                 }
             } else if (msg.equals("/start") &&
                     !tgUserRepository.existsByChatId(chatId)) {
                 if (check(update)) {
-                    execute(makeService.whenEnter(update));
-                    if (videoNoteRepository.existsById(1L))
+                    if (savedFilesRepository.existsById(2L))
+                        execute(makeService.whenEnter1(update));
+                    else
+                        execute(makeService.whenEnter(update));
+                    if (savedFilesRepository.existsById(1L))
                         execute(makeService.whenEnter2(chatId));
                     execute(whenEnter3(chatId));
                 } else {
@@ -115,17 +120,17 @@ public class TgService extends TelegramLongPollingBot {
                 execute(makeService.whenPost(update));
             } else if (msg.equals("/post_channel")) {
                 execute(makeService.whenPostChannel(update));
-            } else if (makeService.getUserStep(chatId).equals(StepName.POST) &&
+            } else if (msg.equals("/post_save")) {
+                execute(makeService.whenPostChannel(update));
+            } else if ((makeService.getUserStep(chatId).equals(StepName.POST) ||
+                    makeService.getUserStep(chatId).equals(StepName.POST_CHANNEL) ||
+                    makeService.getUserStep(chatId).equals(StepName.POST_SAVE)) &&
                     msg.equals(makeService.getMessage(Message.BACK))) {
                 deleteMessage(update);
                 execute(makeService.whenMenu1(chatId));
             } else if (makeService.getUserStep(chatId).equals(StepName.POST) &&
                     !msg.equals(makeService.getMessage(Message.BACK))) {
                 whenPostText(update);
-                deleteMessage(update);
-                execute(makeService.whenMenu1(chatId));
-            } else if (makeService.getUserStep(chatId).equals(StepName.POST_CHANNEL) &&
-                    msg.equals(makeService.getMessage(Message.BACK))) {
                 deleteMessage(update);
                 execute(makeService.whenMenu1(chatId));
             } else if (makeService.getUserStep(chatId).equals(StepName.POST_CHANNEL) &&
@@ -150,6 +155,12 @@ public class TgService extends TelegramLongPollingBot {
                 whenClickReaction(update, "eyes");
             } else if (data.equals("hundred")) {
                 whenClickReaction(update, "hundred");
+            } else if (data.equals("back") && makeService.getUserStep(chatId).equals(StepName.CHOOSE_FROM_MENU)) {
+                execute(whenEnter33(update));
+            } else if (data.equals("back") && makeService.getUserStep(chatId).equals(StepName.GET_REFERRAL_LINK)) {
+                execute(makeService.whenMenu(update));
+            } else if (data.equals("getReferralLink")) {
+                execute(whenGetReferralLink(update));
             }
         } else if (update.hasMessage() && update.getMessage().hasDocument()) {
             if (makeService.getUserStep(chatId).equals(StepName.POST)) {
@@ -168,6 +179,10 @@ public class TgService extends TelegramLongPollingBot {
                 execute(makeService.whenMenu1(chatId));
             } else if (makeService.getUserStep(chatId).equals(StepName.POST_CHANNEL)) {
                 whenPostChannelPhoto(update);
+                deleteMessage(update);
+                execute(makeService.whenMenu1(chatId));
+            } else if (makeService.getUserStep(chatId).equals(StepName.POST_SAVE)) {
+                whenSavePhoto(update);
                 deleteMessage(update);
                 execute(makeService.whenMenu1(chatId));
             }
@@ -203,11 +218,15 @@ public class TgService extends TelegramLongPollingBot {
             }
         } else if (update.hasMessage() && update.getMessage().hasVideoNote()) {
             if (makeService.getUserStep(chatId).equals(StepName.POST)) {
-                whenSaveVideoNote(update);
+                whenPostVideoNote(update);
                 deleteMessage(update);
                 execute(makeService.whenMenu1(chatId));
             } else if (makeService.getUserStep(chatId).equals(StepName.POST_CHANNEL)) {
                 whenPostChannelVideoNote(update);
+                deleteMessage(update);
+                execute(makeService.whenMenu1(chatId));
+            } else if (makeService.getUserStep(chatId).equals(StepName.POST_SAVE)) {
+                whenSaveVideoNote(update);
                 deleteMessage(update);
                 execute(makeService.whenMenu1(chatId));
             }
@@ -229,10 +248,12 @@ public class TgService extends TelegramLongPollingBot {
         approveChatJoinRequest.setChatId(request.getChat().getId().toString());
         approveChatJoinRequest.setUserId(request.getUser().getId());
         execute(approveChatJoinRequest);
-        execute(makeService.whenMenu1(chatId));
 
-        execute(makeService.whenEnter(update));
-        if (videoNoteRepository.existsById(1L))
+        if (savedFilesRepository.existsById(2L))
+            execute(makeService.whenEnter1(update));
+        else
+            execute(makeService.whenEnter(update));
+        if (savedFilesRepository.existsById(1L))
             execute(makeService.whenEnter2(chatId));
         execute(whenEnter3(chatId));
     }
@@ -589,22 +610,112 @@ public class TgService extends TelegramLongPollingBot {
         execute(deleteMessage);
     }
 
+    private EditMessageText whenGetReferralLink(Update update) throws TelegramApiException {
+        String chatId = makeService.getChatId(update);
+        EditMessageText editMessageText = new EditMessageText();
+        editMessageText.setChatId(chatId);
+        editMessageText.setText(String.format(makeService.getMessage(Message.SHARING_LINK_MSG), generateInviteLink(chatId)));
+        editMessageText.setReplyMarkup(forGetReferralLink(chatId));
+        editMessageText.setMessageId(update.getCallbackQuery().getMessage().getMessageId());
+        makeService.setUserStep(chatId, StepName.GET_REFERRAL_LINK);
+        return editMessageText;
+    }
+
     public SendMessage whenEnter3(String chatId) throws TelegramApiException {
         SendMessage sendMessage = new SendMessage(chatId,
-                String.format(makeService.getMessage(Message.SENT_THIS_LINK), generateInviteLink(chatId)));
-        sendMessage.setReplyMarkup(forEnter(chatId));
+                makeService.getMessage(Message.WHEN_JOINED_MESSAGE2));
+        sendMessage.setReplyMarkup(forEnter3(chatId));
+        sendMessage.enableHtml(true);
+        makeService.setUserStep(chatId, StepName.STEP_1);
         return sendMessage;
     }
 
-    public InlineKeyboardMarkup forEnter(String chatId) throws TelegramApiException {
+    public EditMessageText whenEnter33(Update update) throws TelegramApiException {
+        String chatId = makeService.getChatId(update);
+        EditMessageText editMessageText = new EditMessageText();
+        editMessageText.setChatId(chatId);
+        editMessageText.setMessageId(update.getCallbackQuery().getMessage().getMessageId());
+        editMessageText.setReplyMarkup(forEnter3(chatId));
+        editMessageText.enableHtml(true);
+        editMessageText.setText(makeService.getMessage(Message.WHEN_JOINED_MESSAGE2));
+        makeService.setUserStep(chatId, StepName.STEP_1);
+        return editMessageText;
+    }
+
+    public InlineKeyboardMarkup forGetReferralLink(String chatId) throws TelegramApiException {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         InlineKeyboardButton button1 = new InlineKeyboardButton();
-        button1.setText(makeService.getMessage(Message.SHARE_LINK));
-        button1.setSwitchInlineQuery(String.format(makeService.getMessage(Message.SHARING_LINK_MSG), generateInviteLink(chatId)));
+        InlineKeyboardButton button2 = new InlineKeyboardButton();
+        InlineKeyboardButton button3 = new InlineKeyboardButton();
+        InlineKeyboardButton button4 = new InlineKeyboardButton();
+        InlineKeyboardButton button5 = new InlineKeyboardButton();
+
+        button1.setText(makeService.getMessage(Message.ENERGY_SC_CHANNEL));
+        button2.setText(makeService.getMessage(Message.FREE_CHALLENGE));
+        button3.setText(makeService.getMessage(Message.PRIZE_LIST));
+        button4.setText(makeService.getMessage(Message.SHARE_LINK));
+        button5.setText(makeService.getMessage(Message.BACK));
+
+        button1.setUrl(generateInviteLink(chatId));
+        button2.setCallbackData("00");
+        button3.setCallbackData("prizeList");
+        button4.setSwitchInlineQuery(String.format(makeService.getMessage(Message.SHARING_LINK_MSG), generateInviteLink(chatId)));
+        button5.setCallbackData("back");
+
         List<InlineKeyboardButton> row1 = new ArrayList<>();
+        List<InlineKeyboardButton> row2 = new ArrayList<>();
+        List<InlineKeyboardButton> row3 = new ArrayList<>();
+        List<InlineKeyboardButton> row4 = new ArrayList<>();
+        List<InlineKeyboardButton> row5 = new ArrayList<>();
+
         row1.add(button1);
+        row2.add(button2);
+        row3.add(button3);
+        row4.add(button4);
+        row5.add(button5);
+
         rowsInline.add(row1);
+        rowsInline.add(row2);
+        rowsInline.add(row3);
+        rowsInline.add(row4);
+        rowsInline.add(row5);
+        markupInline.setKeyboard(rowsInline);
+        return markupInline;
+    }
+
+    public InlineKeyboardMarkup forEnter3(String chatId) throws TelegramApiException {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        InlineKeyboardButton button1 = new InlineKeyboardButton();
+        InlineKeyboardButton button2 = new InlineKeyboardButton();
+        InlineKeyboardButton button3 = new InlineKeyboardButton();
+        InlineKeyboardButton button4 = new InlineKeyboardButton();
+
+        button1.setText(makeService.getMessage(Message.REDIRECT_TO_CHANNEL));
+        button2.setText(makeService.getMessage(Message.SHARE_LINK));
+        button3.setText(makeService.getMessage(Message.PRIZE_LIST));
+        button4.setText(makeService.getMessage(Message.MENU));
+
+        button1.setUrl(generateInviteLink(chatId));
+        button2.setSwitchInlineQuery(String.format(makeService.getMessage(Message.SHARING_LINK_MSG), generateInviteLink(chatId)));
+        button3.setCallbackData("prizeList");
+        button4.setCallbackData("menu");
+
+        List<InlineKeyboardButton> row1 = new ArrayList<>();
+        List<InlineKeyboardButton> row2 = new ArrayList<>();
+        List<InlineKeyboardButton> row3 = new ArrayList<>();
+        List<InlineKeyboardButton> row4 = new ArrayList<>();
+
+        row1.add(button1);
+        row2.add(button2);
+        row3.add(button3);
+        row4.add(button4);
+
+        rowsInline.add(row1);
+        rowsInline.add(row2);
+        rowsInline.add(row3);
+        rowsInline.add(row4);
         markupInline.setKeyboard(rowsInline);
         return markupInline;
     }
@@ -766,21 +877,59 @@ public class TgService extends TelegramLongPollingBot {
     }
 
     @SneakyThrows
+    public void whenPostVideoNote(Update update) {
+        String chatId = makeService.getChatId(update);
+        String fileId1 = update.getMessage().getVideoNote().getFileId();
+
+        SendVideoNote sendVideoNote = new SendVideoNote();
+        List<TgUser> users = tgUserRepository.findAll();
+        for (TgUser user : users) {
+            if (!Objects.equals(user.getChatId(), chatId)) {
+                sendVideoNote.setChatId(user.getChatId());
+                sendVideoNote.setVideoNote(new InputFile(fileId1));
+                execute(sendVideoNote);
+            }
+        }
+        execute(new SendMessage(chatId,
+                String.format(makeService.getMessage(Message.POST_SENT), users.size() - 1)));
+    }
+
+    @SneakyThrows
     private void whenSaveVideoNote(Update update) {
         String chatId = makeService.getChatId(update);
         String fileId = update.getMessage().getVideoNote().getFileId();
-        Optional<VideoNote> optional = videoNoteRepository.findById(1L);
+        Optional<SavedFiles> optional = savedFilesRepository.findById(1L);
+        SavedFiles savedFiles;
         if (optional.isEmpty()) {
-            VideoNote videoNote = VideoNote.builder()
+            savedFiles = SavedFiles.builder()
                     .id(1L)
                     .fileId(fileId)
                     .build();
-            videoNoteRepository.save(videoNote);
         } else {
-            VideoNote videoNote = optional.get();
-            videoNote.setFileId(fileId);
-            videoNoteRepository.save(videoNote);
+            savedFiles = optional.get();
+            savedFiles.setFileId(fileId);
         }
+        savedFilesRepository.save(savedFiles);
+        execute(new SendMessage(chatId,
+                makeService.getMessage(Message.SAVED)));
+    }
+
+    @SneakyThrows
+    private void whenSavePhoto(Update update) {
+        String chatId = makeService.getChatId(update);
+        String fileId = update.getMessage().getPhoto().get(0).getFileId();
+        Optional<SavedFiles> optional = savedFilesRepository.findById(2L);
+        SavedFiles savedFiles;
+        if (optional.isEmpty()) {
+            savedFiles = SavedFiles.builder()
+                    .id(2L)
+                    .fileId(fileId)
+                    .build();
+        } else {
+            savedFiles = optional.get();
+            savedFiles.setFileId(fileId);
+        }
+        savedFilesRepository.save(savedFiles);
         execute(new SendMessage(chatId,
                 makeService.getMessage(Message.SAVED)));
     }

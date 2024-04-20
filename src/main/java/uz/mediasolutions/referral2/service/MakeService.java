@@ -1,13 +1,11 @@
 package uz.mediasolutions.referral2.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.groupadministration.SetChatPhoto;
-import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideoNote;
-import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -16,21 +14,21 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import org.telegram.telegrambots.meta.api.objects.webapp.WebAppInfo;
+import uz.mediasolutions.referral2.exceptions.RestException;
 import uz.mediasolutions.referral2.utills.constants.Message;
 import uz.mediasolutions.referral2.entity.LanguagePs;
 import uz.mediasolutions.referral2.entity.LanguageSourcePs;
 import uz.mediasolutions.referral2.entity.TgUser;
-import uz.mediasolutions.referral2.entity.VideoNote;
+import uz.mediasolutions.referral2.entity.SavedFiles;
 import uz.mediasolutions.referral2.enums.StepName;
 import uz.mediasolutions.referral2.repository.LanguageRepositoryPs;
 import uz.mediasolutions.referral2.repository.StepRepository;
 import uz.mediasolutions.referral2.repository.TgUserRepository;
-import uz.mediasolutions.referral2.repository.VideoNoteRepository;
+import uz.mediasolutions.referral2.repository.SavedFilesRepository;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -40,7 +38,7 @@ public class MakeService {
     private final TgUserRepository tgUserRepository;
     private final StepRepository stepRepository;
     private final LanguageRepositoryPs languageRepositoryPs;
-    private final VideoNoteRepository videoNoteRepository;
+    private final SavedFilesRepository savedFilesRepository;
 
     public void setUserStep(String chatId, StepName stepName) {
         TgUser tgUser = tgUserRepository.findByChatId(chatId);
@@ -170,37 +168,62 @@ public class MakeService {
         InlineKeyboardButton button2 = new InlineKeyboardButton();
         InlineKeyboardButton button3 = new InlineKeyboardButton();
         InlineKeyboardButton button4 = new InlineKeyboardButton();
+        InlineKeyboardButton button5 = new InlineKeyboardButton();
+        InlineKeyboardButton button6 = new InlineKeyboardButton();
 
         button1.setText(getMessage(Message.CHALLENGE));
-        button2.setText(getMessage(Message.INVITE));
-        button3.setText(getMessage(Message.PRIZE_LIST));
-        button4.setText(getMessage(Message.REACH_TO_ADMIN));
+        button2.setText(getMessage(Message.GET_REFERRAL_LINK));
+        button3.setText(getMessage(Message.SEE_WINNERS_LIST));
+        button4.setText(getMessage(Message.PRIZE_LIST));
+        button5.setText(getMessage(Message.REACH_TO_ADMIN));
+        button6.setText(getMessage(Message.BACK));
 
-        button1.setUrl(getMessage(Message.TELEGRAPH_URL_FOR_CHALLENGE));
-        button2.setCallbackData("invite");
-        button3.setUrl(getMessage(Message.TELEGRAPH_LINK_FOR_PRIZE_LIST));
-        button4.setUrl(getMessage(Message.ADMIN_USERNAME));
+        button1.setCallbackData("challenge");
+        button2.setCallbackData("getReferralLink");
+        button3.setWebApp(new WebAppInfo("https://google.com"));
+        button4.setCallbackData("prizeList");
+        button5.setUrl(getMessage(Message.ADMIN_USERNAME));
+        button6.setCallbackData("back");
 
         List<InlineKeyboardButton> row1 = new ArrayList<>();
         List<InlineKeyboardButton> row2 = new ArrayList<>();
         List<InlineKeyboardButton> row3 = new ArrayList<>();
+        List<InlineKeyboardButton> row4 = new ArrayList<>();
+        List<InlineKeyboardButton> row5 = new ArrayList<>();
+        List<InlineKeyboardButton> row6 = new ArrayList<>();
 
         row1.add(button1);
         row2.add(button2);
         row3.add(button3);
-        row3.add(button4);
+        row4.add(button4);
+        row5.add(button5);
+        row6.add(button6);
 
         rowsInline.add(row1);
         rowsInline.add(row2);
         rowsInline.add(row3);
+        rowsInline.add(row4);
+        rowsInline.add(row5);
+        rowsInline.add(row6);
 
         markupInline.setKeyboard(rowsInline);
 
         return markupInline;
     }
 
-    public SendMessage whenEnter(Update update) {
+    public SendMessage whenBegin(Update update) {
         String chatId = update.getChatJoinRequest().getUser().getId().toString();
+        SendMessage sendMessage =  new SendMessage(chatId, getMessage(Message.WHEN_BEGIN_MSG));
+        sendMessage.enableHtml(true);
+        return sendMessage;
+    }
+
+    public SendMessage whenEnter(Update update) {
+        String chatId;
+        if (update.hasChatJoinRequest())
+            chatId = update.getChatJoinRequest().getUser().getId().toString();
+        else
+            chatId = getChatId(update);
         if (!tgUserRepository.existsByChatId(chatId)) {
             TgUser user = TgUser.builder()
                     .chatId(chatId)
@@ -208,15 +231,38 @@ public class MakeService {
                     .build();
             tgUserRepository.save(user);
         }
-        return new SendMessage(chatId,
-                getMessage(Message.WHEN_JOINED_MESSAGE));
+        SendMessage sendMessage = new SendMessage(chatId, getMessage(Message.WHEN_JOINED_MESSAGE));
+        sendMessage.enableHtml(true);
+        return sendMessage;
+    }
+
+    public SendPhoto whenEnter1(Update update) {
+        String chatId;
+        if (update.hasChatJoinRequest())
+            chatId = update.getChatJoinRequest().getUser().getId().toString();
+        else
+            chatId = getChatId(update);
+        if (!tgUserRepository.existsByChatId(chatId)) {
+            TgUser user = TgUser.builder()
+                    .chatId(chatId)
+                    .name(getUsername(update) != null ? getUsername(update) : getFirstName(update))
+                    .build();
+            tgUserRepository.save(user);
+        }
+        SavedFiles savedFiles = savedFilesRepository.findById(2L).orElseThrow(
+                () -> RestException.restThrow("File not found", HttpStatus.BAD_REQUEST));
+
+        SendPhoto sendPhoto = new SendPhoto();
+        sendPhoto.setChatId(chatId);
+        sendPhoto.setPhoto(new InputFile(savedFiles.getFileId()));
+        sendPhoto.setCaption(getMessage(Message.WHEN_JOINED_MESSAGE));
+        sendPhoto.setParseMode("HTML");
+        return sendPhoto;
     }
 
     public SendVideoNote whenEnter2(String chatId) {
-
-        Optional<VideoNote> optional = videoNoteRepository.findById(1L);
+        Optional<SavedFiles> optional = savedFilesRepository.findById(1L);
         if (optional.isPresent()) {
-            setUserStep(chatId, StepName.STEP_1);
             SendVideoNote sendVideoNote = new SendVideoNote();
             sendVideoNote.setChatId(chatId);
             sendVideoNote.setVideoNote(new InputFile(optional.get().getFileId()));
@@ -254,6 +300,16 @@ public class MakeService {
         sendMessage.setReplyMarkup(forPost());
         sendMessage.enableHtml(true);
         setUserStep(chatId, StepName.POST_CHANNEL);
+        return sendMessage;
+    }
+
+    public SendMessage whenPostSave(Update update) {
+        String chatId = getChatId(update);
+        SendMessage sendMessage = new SendMessage(chatId,
+                getMessage(Message.POST_SAVE));
+        sendMessage.setReplyMarkup(forPost());
+        sendMessage.enableHtml(true);
+        setUserStep(chatId, StepName.POST_SAVE);
         return sendMessage;
     }
 }

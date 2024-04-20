@@ -2,7 +2,6 @@ package uz.mediasolutions.referral2.entity;
 
 import javax.persistence.*;
 import lombok.*;
-import uz.mediasolutions.referral2.enums.StepName;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,8 +10,8 @@ import uz.mediasolutions.referral2.enums.StepName;
 @ToString
 @Builder
 @Entity
-@Table(name = "video_note")
-public class VideoNote {
+@Table(name = "saved_files")
+public class SavedFiles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
