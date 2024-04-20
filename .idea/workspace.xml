@@ -4,12 +4,80 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84aba5ad-e9d7-4b64-b08a-113ff6e16b8b" name="Changes" comment="Done">
+    <list default="true" id="84aba5ad-e9d7-4b64-b08a-113ff6e16b8b" name="Changes" comment="...">
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/config/AuditConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/config/AuditorAwareImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/config/MessageSourceConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/config/SpringFoxConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/config/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/config/WebMvcConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/controller/abs/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/controller/abs/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/controller/impl/AuthControllerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/controller/impl/UserControllerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/MessageCount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/Reaction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/enums/RoleName.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/exceptions/ExceptionHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/exceptions/RestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/manual/ApiResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/manual/ErrorData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/manual/LocalTimeSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/mapper/UserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/payload/SignInDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/payload/TgUserDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/payload/TokenDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/MessageCountRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/ReactionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/secret/JwtAuthFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/secret/JwtAuthenticationEntryPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/secret/JwtProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/abs/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/abs/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/impl/AuthServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/utills/CommonUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/utills/UTF8Control.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/utills/constants/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/utills/constants/Rest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d33c8b95-b9f0-444f-a0fd-9da9c8fa5441.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d33c8b95-b9f0-444f-a0fd-9da9c8fa5441.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d33c8b95-b9f0-444f-a0fd-9da9c8fa5441/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d33c8b95-b9f0-444f-a0fd-9da9c8fa5441/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-prod.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-prod.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application-prod.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-prod.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/constants/Message.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/LanguagePs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/LanguagePs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/LanguageSourcePs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/LanguageSourcePs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/Step.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/Step.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/TgUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/TgUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/VideoNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/VideoNote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsAudit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsAudit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsDate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsLong.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsLong.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsUUID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/entity/template/AbsUUID.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/enums/StepName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/enums/StepName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/TgUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/repository/TgUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/MakeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/MakeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/TgService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uz/mediasolutions/referral2/service/TgService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages_uz.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages_uz.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/messages_uz.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/messages_uz.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/constants/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/constants/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/constants/Message.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/LanguagePs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/LanguagePs.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/LanguageSourcePs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/LanguageSourcePs.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/Step.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/Step.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/TgUser$TgUserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/TgUser$TgUserBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/TgUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/TgUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsAudit.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsAudit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsDate.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsDate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsLong.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsLong.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsUUID.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/entity/template/AbsUUID.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/enums/StepName.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/enums/StepName.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/repository/TgUserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/repository/TgUserRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/MakeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/MakeService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/TgService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/uz/mediasolutions/referral2/service/TgService.class" afterDir="false" />
     </list>
@@ -21,8 +89,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -52,7 +120,9 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2f9LC1hySQD4wUMppsuuFrLyzD4" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -69,7 +139,7 @@
     "Spring Boot.Referral2Application.executor": "Run",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Java/sale-service-bot",
+    "last_opened_file_path": "D:/Java/referral-2/src/main/java/uz/mediasolutions/referral2/payload",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -85,16 +155,23 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="uz.mediasolutions.referral2.repository" />
+      <recent name="uz.mediasolutions.referral2.service.abs" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Java\referral-2\src\main\java\uz\mediasolutions\referral2\payload" />
       <recent name="D:\Java\referral-2\src\main\java\uz\mediasolutions\referral2" />
       <recent name="D:\Java\referral-2\src\main\java\uz\mediasolutions\referral2\repository" />
       <recent name="D:\Java\referral-2\src\main\java\uz\mediasolutions\referral2\enums" />
       <recent name="D:\Java\referral-2\src\main\java\uz\mediasolutions\referral2\entity\" />
-      <recent name="D:\Java\referral-2\src\main\java\uz\mediasolutions\referral2\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="uz.mediasolutions.referral2.repository" />
-      <recent name="uz.mediasolutions.referral2.entity" />
+      <recent name="uz.mediasolutions.referral2.controller.impl" />
+      <recent name="uz.mediasolutions.referral2.controller.abs" />
+      <recent name="uz.mediasolutions.referral2.service.impl" />
+      <recent name="uz.mediasolutions.referral2.service.abs" />
+      <recent name="uz.mediasolutions.referral2.utills" />
     </key>
   </component>
   <component name="RunManager">
@@ -123,7 +200,11 @@
       <option name="presentableId" value="Default" />
       <updated>1713208218639</updated>
       <workItem from="1713208219718" duration="1700000" />
-      <workItem from="1713242250862" duration="29128000" />
+      <workItem from="1713242250862" duration="29205000" />
+      <workItem from="1713288419088" duration="1179000" />
+      <workItem from="1713466546682" duration="4532000" />
+      <workItem from="1713509379131" duration="23343000" />
+      <workItem from="1713546674936" duration="17405000" />
     </task>
     <task id="LOCAL-00001" summary="Bismillah!&#10;Started!">
       <option name="closed" value="true" />
@@ -149,7 +230,23 @@
       <option name="project" value="LOCAL" />
       <updated>1713280774113</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="...">
+      <option name="closed" value="true" />
+      <created>1713286203436</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713286203436</updated>
+    </task>
+    <task id="LOCAL-00005" summary="...">
+      <option name="closed" value="true" />
+      <created>1713286210646</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713286210646</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,6 +267,7 @@
     <MESSAGE value="Bismillah!&#10;Started!" />
     <MESSAGE value="Testoviy rejim uchun tayyor" />
     <MESSAGE value="Done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Done" />
+    <MESSAGE value="..." />
+    <option name="LAST_COMMIT_MESSAGE" value="..." />
   </component>
 </project>

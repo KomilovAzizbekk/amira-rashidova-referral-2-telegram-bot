@@ -1,6 +1,6 @@
 package uz.mediasolutions.referral2.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import uz.mediasolutions.referral2.enums.StepName;
 
@@ -11,7 +11,7 @@ import uz.mediasolutions.referral2.enums.StepName;
 @ToString
 @Builder
 @Entity
-@Table(name = "step")
+@Table(name = "video_note")
 public class VideoNote {
 
     @Id

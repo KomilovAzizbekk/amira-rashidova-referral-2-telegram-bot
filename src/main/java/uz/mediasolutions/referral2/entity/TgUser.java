@@ -5,7 +5,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import uz.mediasolutions.referral2.entity.template.AbsLong;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,11 +23,20 @@ public class TgUser extends AbsLong {
     @Column(name = "chat_id")
     private String chatId;
 
-//    @Column(name = "name")
-//    private String name;
-//
-//    @Column(name = "phone_number")
-//    private String phoneNumber;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "comments")
+    private int comments;
+
+    @Column(name = "reactions")
+    private int reactions;
+
+    @Column(name = "invited_people")
+    private int invitedPeople;
+
+    @Column(name = "points")
+    private int points;
 
     @Column(name = "invite_link")
     private String inviteLink;

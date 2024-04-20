@@ -8,4 +8,7 @@ public interface TgUserRepository extends JpaRepository<TgUser, Long> {
     TgUser findByChatId(String chatId);
 
     boolean existsByChatId(String chatId);
+
+    TgUser findByInviteLink(String inviteLink);
+
 }

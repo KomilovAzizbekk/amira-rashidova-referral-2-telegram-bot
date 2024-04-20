@@ -3,7 +3,7 @@ package uz.mediasolutions.referral2.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @AllArgsConstructor

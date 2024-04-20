@@ -3,7 +3,7 @@ package uz.mediasolutions.referral2.entity;
 import lombok.*;
 import uz.mediasolutions.referral2.enums.StepName;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor

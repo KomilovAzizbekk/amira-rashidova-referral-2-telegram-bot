@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.groupadministration.SetChatPho
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideoNote;
+import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -15,7 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import uz.mediasolutions.referral2.constants.Message;
+import uz.mediasolutions.referral2.utills.constants.Message;
 import uz.mediasolutions.referral2.entity.LanguagePs;
 import uz.mediasolutions.referral2.entity.LanguageSourcePs;
 import uz.mediasolutions.referral2.entity.TgUser;
@@ -70,6 +71,15 @@ public class MakeService {
         return "";
     }
 
+    public String getFirstName(Update update) {
+        if (update.hasMessage()) {
+            return update.getMessage().getFrom().getFirstName();
+        } else if (update.hasCallbackQuery()) {
+            return update.getCallbackQuery().getFrom().getFirstName();
+        }
+        return "";
+    }
+
     public String getMessage(String key) {
         List<LanguagePs> allByLanguage = languageRepositoryPs.findAll();
         if (!allByLanguage.isEmpty()) {
@@ -93,19 +103,20 @@ public class MakeService {
 
 //        if (Objects.equals(chatId, "285710521") || Objects.equals(chatId, "6931160281")
 //                || Objects.equals(chatId, "1302908674")) {
-            if (!tgUserRepository.existsByChatId(chatId)) {
-                TgUser user = TgUser.builder()
-                        .chatId(chatId)
-                        .step(stepRepository.findByName(StepName.POST))
-                        .build();
-                tgUserRepository.save(user);
-            } else {
-                setUserStep(chatId, StepName.POST);
-            }
-            sendMessage.setText(getMessage(Message.POST));
-            sendMessage.enableHtml(true);
-            sendMessage.setReplyMarkup(forPost());
-            return sendMessage;
+        if (!tgUserRepository.existsByChatId(chatId)) {
+            TgUser user = TgUser.builder()
+                    .chatId(chatId)
+                    .name(getUsername(update) != null ? getUsername(update) : getFirstName(update))
+                    .step(stepRepository.findByName(StepName.POST))
+                    .build();
+            tgUserRepository.save(user);
+        } else {
+            setUserStep(chatId, StepName.POST);
+        }
+        sendMessage.setText(getMessage(Message.POST));
+        sendMessage.enableHtml(true);
+        sendMessage.setReplyMarkup(forPost());
+        return sendMessage;
 //        } else {
 //            sendMessage.setText(getMessage(Message.YOU_HAVE_NOT_ADMIN_RIGHTS));
 //            return sendMessage;
@@ -129,8 +140,7 @@ public class MakeService {
         return markup;
     }
 
-    public SendMessage whenMenu1(Update update) {
-        String chatId = getChatId(update);
+    public SendMessage whenMenu1(String chatId) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.setText(String.format(getMessage(Message.MENU_MSG)));
@@ -189,10 +199,12 @@ public class MakeService {
         return markupInline;
     }
 
-    public SendMessage whenEnter(String chatId) {
+    public SendMessage whenEnter(Update update) {
+        String chatId = getChatId(update);
         if (!tgUserRepository.existsByChatId(chatId)) {
             TgUser user = TgUser.builder()
                     .chatId(chatId)
+                    .name(getUsername(update) != null ? getUsername(update) : getFirstName(update))
                     .build();
             tgUserRepository.save(user);
         }
@@ -214,40 +226,6 @@ public class MakeService {
         return new SendVideoNote();
     }
 
-    public SendMessage whenEnter3(String chatId) {
-        SendMessage sendMessage = new SendMessage(chatId,
-                getMessage(Message.WHEN_JOINED_MESSAGE2));
-        sendMessage.setReplyMarkup(forEnter());
-        return sendMessage;
-    }
-
-    private InlineKeyboardMarkup forEnter() {
-        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-
-        InlineKeyboardButton button1 = new InlineKeyboardButton();
-        InlineKeyboardButton button2 = new InlineKeyboardButton();
-
-        button1.setText(getMessage(Message.REDIRECT_TO_CHANNEL));
-        button2.setText(getMessage(Message.MENU));
-
-        button1.setUrl(getMessage(Message.CHANNEL_URL_FOREVER));
-        button2.setCallbackData("menu");
-
-        List<InlineKeyboardButton> row1 = new ArrayList<>();
-        List<InlineKeyboardButton> row2 = new ArrayList<>();
-
-        row1.add(button1);
-        row2.add(button2);
-
-        rowsInline.add(row1);
-        rowsInline.add(row2);
-
-        markupInline.setKeyboard(rowsInline);
-
-        return markupInline;
-    }
-
     public SendMessage whenNotUser(Update update) {
         String chatId = getChatId(update);
         SendMessage sendMessage = new SendMessage(chatId,
@@ -267,5 +245,15 @@ public class MakeService {
         rowsInline.add(row1);
         markupInline.setKeyboard(rowsInline);
         return markupInline;
+    }
+
+    public SendMessage whenPostChannel(Update update) {
+        String chatId = getChatId(update);
+        SendMessage sendMessage = new SendMessage(chatId,
+                getMessage(Message.POST_TYPE));
+        sendMessage.setReplyMarkup(forPost());
+        sendMessage.enableHtml(true);
+        setUserStep(chatId, StepName.POST_CHANNEL);
+        return sendMessage;
     }
 }

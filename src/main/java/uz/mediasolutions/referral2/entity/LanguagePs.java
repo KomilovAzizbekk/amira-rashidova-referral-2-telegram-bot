@@ -1,6 +1,6 @@
 package uz.mediasolutions.referral2.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
