@@ -200,7 +200,7 @@ public class MakeService {
     }
 
     public SendMessage whenEnter(Update update) {
-        String chatId = getChatId(update);
+        String chatId = update.getChatJoinRequest().getUser().getId().toString();
         if (!tgUserRepository.existsByChatId(chatId)) {
             TgUser user = TgUser.builder()
                     .chatId(chatId)

@@ -2,6 +2,7 @@ package uz.mediasolutions.referral2.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.groupadministration.*;
@@ -26,10 +27,7 @@ import uz.mediasolutions.referral2.enums.StepName;
 import uz.mediasolutions.referral2.repository.TgUserRepository;
 import uz.mediasolutions.referral2.repository.VideoNoteRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -59,13 +57,13 @@ public class TgService extends TelegramLongPollingBot {
         return "6052104473:AAEscLILevwPMcG_00PYqAf-Kpb7eIUCIGg";
     }
 
+
     @SneakyThrows
     @Override
     public void onUpdateReceived(Update update) {
         String chatId = makeService.getChatId(update);
         System.out.println(update);
         if (update.hasMessage() && update.getMessage().getChat().getId().toString().equals(GROUP_ID)) {
-            System.out.println("lllllllll");
             if (!update.getMessage().getFrom().getFirstName().equals("Telegram") &&
                     tgUserRepository.existsByChatId(update.getMessage().getFrom().getId().toString())) {
                 TgUser user = tgUserRepository.findByChatId(update.getMessage().getFrom().getId().toString());
@@ -74,27 +72,18 @@ public class TgService extends TelegramLongPollingBot {
                 user.setPoints(user.getPoints() + 1);
                 tgUserRepository.save(user);
             }
-        }
-        else if (update.hasChatJoinRequest()) {
-            ChatJoinRequest request = update.getChatJoinRequest();
-            String inviteLink = request.getInviteLink().getInviteLink();
-            TgUser user = tgUserRepository.findByInviteLink(inviteLink);
-            if (user != null) {
-                user.setInvitedPeople(user.getInvitedPeople() + 1);
-                TgUser save = tgUserRepository.save(user);
-                if (save.getInvitedPeople() == 5) {
-                    ApproveChatJoinRequest approveChatJoinRequest = new ApproveChatJoinRequest();
-                    approveChatJoinRequest.setChatId(request.getChat().getId().toString());
-                    approveChatJoinRequest.setUserId(Long.valueOf(user.getChatId()));
-                    execute(approveChatJoinRequest);
-                    execute(makeService.whenMenu1(user.getChatId()));
+        } else if (update.hasChatJoinRequest()) {
+            System.out.println("Assalom");
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @SneakyThrows
+                @Override
+                public void run() {
+                    approveUser(update);
+                    System.out.println("Task executed after 1 minute");
                 }
-            }
-
-            execute(makeService.whenEnter(update));
-            if (videoNoteRepository.existsById(1L))
-                execute(makeService.whenEnter2(request.getUser().getId().toString()));
-            execute(whenEnter3(request.getUser().getId().toString()));
+            };
+            timer.schedule(task, 20 * 1000);
         } else if (update.hasMessage() && update.getMessage().hasText()) {
             String msg = update.getMessage().getText();
             if (msg.equals("/start") &&
@@ -223,7 +212,31 @@ public class TgService extends TelegramLongPollingBot {
                 execute(makeService.whenMenu1(chatId));
             }
         }
+
     }
+
+    public void approveUser(Update update) throws TelegramApiException {
+        ChatJoinRequest request = update.getChatJoinRequest();
+        String chatId = request.getUser().getId().toString();
+        String inviteLink = request.getInviteLink().getInviteLink();
+        TgUser user = tgUserRepository.findByInviteLink(inviteLink);
+        if (user != null) {
+            user.setInvitedPeople(user.getInvitedPeople() + 1);
+            tgUserRepository.save(user);
+        }
+
+        ApproveChatJoinRequest approveChatJoinRequest = new ApproveChatJoinRequest();
+        approveChatJoinRequest.setChatId(request.getChat().getId().toString());
+        approveChatJoinRequest.setUserId(request.getUser().getId());
+        execute(approveChatJoinRequest);
+        execute(makeService.whenMenu1(chatId));
+
+        execute(makeService.whenEnter(update));
+        if (videoNoteRepository.existsById(1L))
+            execute(makeService.whenEnter2(chatId));
+        execute(whenEnter3(chatId));
+    }
+
 
     private void whenClickReaction(Update update, String name) throws TelegramApiException {
         String chatId = update.getCallbackQuery().getFrom().getId().toString();
